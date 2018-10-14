@@ -8,7 +8,7 @@ app.secret_key = key
 
 
 def is_valid_login(password):
-    with open('/run/secrets/login_password') as f:
+    with open('/run/secrets/web_login_password') as f:
         valid_password = f.readline().rstrip()
     return password == valid_password
 

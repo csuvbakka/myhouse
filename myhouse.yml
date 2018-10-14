@@ -6,9 +6,12 @@ services:
       - "5000:5000"
     secrets:
       - flask_key
-      - login_password
+      - web_login_password
+      - redis_password
 secrets:
   flask_key:
-    file: ./passwords/flask.txt
-  login_password:
-    file: ./passwords/login.txt
+    file: ./secret/flask_key
+  web_login_password:
+    file: ./secret/web_login_password
+  redis_password:
+    file: ./secret/redis_password
