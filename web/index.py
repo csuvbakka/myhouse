@@ -2,13 +2,13 @@ from flask import Flask, session, redirect, url_for, render_template, request
 
 
 app = Flask(__name__)
-with open('key.txt') as f:
+with open('/run/secrets/flask_key') as f:
     key = f.readline().rstrip()
 app.secret_key = key
 
 
 def is_valid_login(password):
-    with open('pasword.txt') as f:
+    with open('/run/secrets/login_password') as f:
         valid_password = f.readline().rstrip()
     return password == valid_password
 
