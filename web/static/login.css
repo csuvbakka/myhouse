@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width: 100%;
+    text-align: center;
+}
+
+form.table {
+    display: table;
+    margin: 50px auto;
+    text-align: center;
+    width: 80%;
+}
+
+input {
+    display: table-cell;
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    padding: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+    outline: none;
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #555;
+}
+
+input[type="submit"] {
+    background: #43D1AF;
+    border-bottom: 2px solid #30C29E;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+    color: #fff;
+}
+
+span.tr {
+    display: table-row;
+}
+
