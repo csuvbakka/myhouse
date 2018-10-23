@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   webserver:
-    image: flask_web
+    image: myhouse_flask
     ports:
       - "5000:5000"
     secrets:
@@ -9,14 +9,20 @@ services:
       - web_login_password
       - redis_password
   redis:
-    image: redis_local
+    image: myhouse_redis
     ports:
       - "6379:6379"
     secrets:
       - redis_password
     volumes:
-        - ./redis/redis.conf:/usr/local/etc/redis/redis.conf.orig:ro
-          #command: redis-server /usr/local/etc/redis/redis.conf
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf.orig:ro
+  pushover:
+    image: myhouse_pushover
+    volumes:
+      - ./common:/app/common:ro
+    secrets:
+      - redis_password
+      - pushover_keys
 secrets:
   flask_key:
     file: ./secret/flask_key
@@ -24,3 +30,5 @@ secrets:
     file: ./secret/web_login_password
   redis_password:
     file: ./secret/redis_password
+  pushover_keys:
+    file: ./secret/pushover_keys
