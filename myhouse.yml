@@ -1,6 +1,6 @@
 version: '3.1'
 services:
-  profiles:
+  webserver:
     image: flask_web
     ports:
       - "5000:5000"
@@ -8,6 +8,15 @@ services:
       - flask_key
       - web_login_password
       - redis_password
+  redis:
+    image: redis_local
+    ports:
+      - "6379:6379"
+    secrets:
+      - redis_password
+    volumes:
+        - ./redis/redis.conf:/usr/local/etc/redis/redis.conf.orig:ro
+          #command: redis-server /usr/local/etc/redis/redis.conf
 secrets:
   flask_key:
     file: ./secret/flask_key
