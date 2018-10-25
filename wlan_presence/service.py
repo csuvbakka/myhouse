@@ -65,12 +65,12 @@ class DHCP:
         )
 
     def update(self):
-        connected_wireless_macs = self._get_connected_wireless_macs()
+        #connected_wireless_macs = self._get_connected_wireless_macs()
         connected_clients_list = self._controller.get_connected_clients_list()
-        clients = [proto.ConnectedDevice(c.client_name, c.ip, c.mac) for c in connected_clients_list]
-
-        #self.redis_connection.rpush(services.wlan_presence, json.dumps(clients._asdict()))
-        self.redis_connection.rpush(services.wlan_presence, clients)
+        for client in connected_clients_list:
+            self.redis_connection.rpush(
+                    services.wlan_presence,
+                    proto.ConnectedDevice(client.client_name, client.ip, client.mac))
 
     def _get_connected_wireless_macs(self):
         ip = self.router_data.ip
