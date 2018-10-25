@@ -1,5 +1,6 @@
 import redis
 import time
+import socket
 
 def _read_password():
     with open('/run/secrets/redis_password') as f:
@@ -10,11 +11,19 @@ def _create_connection():
     return redis.StrictRedis(host='redis', port=6379, db=0, password=_read_password(), decode_responses=True)
 
 
+def _is_redis_host_online():
+    try:
+        socket.gethostbyname("redis")
+    except socket.gaierror:
+        return False
+
+    return True
+
+
 def _is_redis_available(connection):
     try:
         connection.ping()
     except redis.exceptions.ConnectionError as e:
-        print(e)
         return False
 
     return True
@@ -28,6 +37,10 @@ def create_connection(n_tries=10):
 
     :param int n_tries: How many times we try to establish the connection.
     :return StrictRedis: The redis connection."""
+    for i in range(n_tries):
+        if not _is_redis_host_online():
+            time.sleep(3)
+
     connection = _create_connection()
     for i in range(n_tries):
         if _is_redis_available(connection):

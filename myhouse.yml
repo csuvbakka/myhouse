@@ -23,6 +23,16 @@ services:
     secrets:
       - redis_password
       - pushover_keys
+  wlan_presence:
+    image: myhouse_wlan_presence
+    volumes:
+      - ./common:/app/common:ro
+    secrets:
+      - redis_password
+      - wlan_router
+    deploy:
+      restart_policy:
+        condition: none
 secrets:
   flask_key:
     file: ./secret/flask_key
@@ -32,3 +42,5 @@ secrets:
     file: ./secret/redis_password
   pushover_keys:
     file: ./secret/pushover_keys
+  wlan_router:
+    file: ./secret/wlan_router

@@ -1,8 +1,6 @@
 import common.redis_lib as redis
+import common.services as services
 from pushover import Client
-
-
-pushover_service = 'pushover'
 
 
 def _read_keys():
@@ -19,5 +17,5 @@ if __name__ == '__main__':
     redis_connection = redis.create_connection()
 
     while (True):
-        data = redis.get_event(redis_connection, pushover_service)
+        data = redis.get_event(redis_connection, services.pushover)
         client.send_message(data, title='test')
