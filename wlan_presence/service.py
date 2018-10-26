@@ -2,6 +2,7 @@ import os
 import roscraco
 import re
 import requests
+import time
 
 import common.constants as constant
 import common.protocol as proto
@@ -87,4 +88,6 @@ class DHCP:
 
 if __name__ == '__main__':
     dhcp = DHCP()
-    dhcp.update()
+    while (True):
+        dhcp.update()
+        time.sleep(30)
