@@ -8,19 +8,12 @@ import common.constants as constant
 import common.protocol as proto
 import common.redis_lib as redis
 import common.services as services
+from common.util import sanitize_mac_address
 
 from collections import namedtuple
 
 
 RouterData = namedtuple('RouterData', ['ip', 'model', 'port', 'user', 'password'])
-
-
-def sanitize_mac_address(mac):
-    mac = mac.lower()
-    mac = mac.replace('-', '')
-    mac = mac.replace(':', '')
-
-    return mac
 
 
 def ping_address(ip_address, timeout=1):
@@ -69,9 +62,13 @@ class DHCP:
         #connected_wireless_macs = self._get_connected_wireless_macs()
         connected_clients_list = self._controller.get_connected_clients_list()
         for client in connected_clients_list:
+            if ping_address(client.ip):
+                status = constant.ONLINE
+            else:
+                status = constant.OFFLINE
             self.redis_connection.rpush(
                     services.wlan_presence,
-                    proto.ConnectedDevice(client.client_name, client.ip, client.mac))
+                    proto.Device(client.client_name, client.ip, client.mac, status))
 
     def _get_connected_wireless_macs(self):
         ip = self.router_data.ip

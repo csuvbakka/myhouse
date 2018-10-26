@@ -49,7 +49,3 @@ def create_connection(n_tries=10):
             time.sleep(3)
 
     raise redis.exceptions.ConnectionError("Failed to connect to the redis server after {} tries.".format(n_tries))
-
-
-def get_event(redis_connection, key):
-    return redis_connection.blpop(key, 0)

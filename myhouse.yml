@@ -30,6 +30,13 @@ services:
     secrets:
       - redis_password
       - wlan_router
+  presence_tracker:
+    image: myhouse_presence_tracker
+    volumes:
+      - ./common:/app/common:ro
+    secrets:
+      - redis_password
+      - devices
     deploy:
       restart_policy:
         condition: none
@@ -44,3 +51,5 @@ secrets:
     file: ./secret/pushover_keys
   wlan_router:
     file: ./secret/wlan_router
+  devices:
+    file: ./secret/devices

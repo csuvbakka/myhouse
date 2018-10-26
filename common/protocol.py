@@ -29,6 +29,9 @@ class Event(object):
         return new_obj
 
 
-class ConnectedDevice(Event):
-    fields = ['name', 'ip', 'mac']
+class Device(Event):
+    fields = ['name', 'ip', 'mac', 'status']
 
+
+class DeviceStatusChange(Event):
+    fields = ['device_name', 'user_name', 'new_status']

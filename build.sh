@@ -15,3 +15,7 @@ cd ..
 cd wlan_presence
 docker build -t myhouse_wlan_presence .
 cd ..
+
+cd presence_tracker
+docker build -t myhouse_presence_tracker .
+cd ..

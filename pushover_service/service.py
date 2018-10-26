@@ -17,5 +17,5 @@ if __name__ == '__main__':
     redis_connection = redis.create_connection()
 
     while (True):
-        data = redis.get_event(redis_connection, services.pushover)
+        data = redis_connection.blpop(services.pushover, 0)
         client.send_message(data, title='test')
